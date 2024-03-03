@@ -1,0 +1,40 @@
+- name: servers will install all servers
+  hosts: webservers
+  become: yes
+  tasks:
+    - name: this will install maven on target servers
+      apt:
+        name: maven
+        state: present
+    - name: this will copy webapp to target servers
+      copy:
+        src: /home/ansible/ansible/webapp
+        dest: /home/ansible/
+    - name: this will genrate package by maven
+      shell: |
+        cd /home/ansible/webapp
+        mvn clean install
+---
+- name: Install Tomcat on Ubuntu
+  hosts: your_host
+  become: yes  # This allows Ansible to execute commands with sudo
+
+  tasks:
+    - name: Install Tomcat packages
+      apt:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - tomcat9   # Tomcat 9 package
+        - tomcat9-admin  # Tomcat 9 admin package
+        - tomcat9-examples  # Tomcat 9 examples package
+
+    - name: Start Tomcat service
+      service:
+        name: tomcat9   # Replace 'tomcat9' with the correct service name
+        state: started
+        enabled: yes
+    - name: deploy web app on tomcat server
+      shell: |
+        cd /home/ansible/webapp/target/
+        cp *.war /var/lib/tomcat9/webapps/
