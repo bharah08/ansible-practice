@@ -1,0 +1,13 @@
+---
+- name: test-apache2
+  hosts: webservers
+  become: yes
+  tasks:
+    - name: apache2 will install
+      apt:
+        name: apache2
+        state: present
+    - name: apache will start 
+      service:
+        name: apache2 
+        state: started

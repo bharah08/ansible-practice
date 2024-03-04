@@ -1,0 +1,14 @@
+---
+- name: file module
+  hosts: webservers
+  become: yes
+  tasks:
+    - name: file creation
+      file:
+        path: /home/ansible/bhaarth
+        state: directory
+    - name: file craetion
+      file:
+        path: /home/ansible/bhaarth/hello.sh
+        mode: 0777
+        state: absent
