@@ -1,0 +1,15 @@
+---
+- name: user creation
+  hosts: webservers
+  become: yes
+  tasks:
+    - name: creating group
+      group:
+        name: k8s
+        state: present
+    - name: creating user
+      user:
+        name: varun
+        group: k8s
+        password: YmhhcmF0aDEyMwo=
+        state: present

@@ -1,0 +1,15 @@
+---
+- name: user-test
+  hosts: webservers
+  become: yes
+  tasks:
+    - name: creating group
+      group:
+        name: devops
+        state: present
+    - name: createing user
+      user:
+        name: bharath
+        state: present
+        group: devops
+        password: "{{ 'mypassword' | password_hash('sha512') }}"
