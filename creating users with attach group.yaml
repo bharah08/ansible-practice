@@ -1,0 +1,14 @@
+---
+- name: u-g
+  hosts: all
+  become: yes
+  tasks:
+    - name: creating u and g
+      user:
+        name: "{{ item.u }}"
+        password: test123
+        groups: "{{ item.g }}"
+      with_items:
+        - { u: 'user1', g: 'my1' }
+        - { u: 'user2', g: 'my2' }
+        - { u: 'user3', g: 'my3' }
