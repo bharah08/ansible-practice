@@ -1,0 +1,13 @@
+---
+- name: hash-loop
+  hosts: all
+  become: yes
+  tasks:
+    - name: copy to 
+      copy:
+        src: "{{ item.a }}"
+        dest: "{{ item.b }}"
+      with_items:
+        - { a: '/home/ansible/test1', b: '/jenkins','/devops','/kubernetes' }
+        - { a: '/home/ansible/test2', b: '/jenkins','/devops','/kubernetes' }
+        - { a: '/home/ansible/test3', b: 'jenkins','/devops','/kubernetes' }
