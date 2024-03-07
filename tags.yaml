@@ -1,0 +1,19 @@
+---
+- name: tags
+  hosts: all
+  become: yes
+  tasks:
+    - name: tags are creating
+      copy:
+        src: /etc/passwd
+        dest: /home/ansible
+      tags: dev-team
+
+    - name: tags are creating
+      copy:
+        src: /etc/passwd
+        dest: /home/ansible
+      tags: test-team
+---
+to run ansible playbook with tags:-
+$ ansible-playbook tags.yaml --tags=test-team,dev-team
