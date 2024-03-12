@@ -1,0 +1,20 @@
+---
+- name: app
+  hosts: all
+  become: yes
+  vars:
+    name: bharath
+    number: 12345
+  tasks: 
+    - name: apps
+      copy:
+        src: index.html
+        dest: /var/www/html
+      notify: need to restart
+  handlers:
+    - name: need to restart
+      service:
+        name: apache2
+        state: restarted
+
+

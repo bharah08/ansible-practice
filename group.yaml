@@ -1,0 +1,15 @@
+---
+- name: groups
+  hosts: all
+  become: yes
+  vars:
+    gp:
+      - gp-1
+      - gp-2
+      - gp-3
+  tasks:
+    - name: craetiing users
+      group:
+        name: "{{ item }}"
+      with_items:
+        - "{{ gp }}"

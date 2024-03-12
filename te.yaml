@@ -1,0 +1,15 @@
+---
+- name: test
+  hosts: all
+  become: yes
+  tasks:
+    - name: tags
+      apt: 
+        name: nginx
+        state: present
+      tags: dev-team
+    - name: service start
+      service:
+        name: nginx
+        state: started
+      tags: dev-team

@@ -1,0 +1,17 @@
+---
+- name: ap install
+  hosts: all
+  become: yes
+  vars:
+    apps:
+      - tree
+      - apache2
+  tasks:
+    - name: install app
+      apt:
+        name: "{{ item }}"
+        update_cache: yes
+        state: present
+      with_items:
+        - "{{ apps }}"
+

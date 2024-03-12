@@ -1,0 +1,22 @@
+---
+- name: rescue
+  hosts: all
+  become: yes
+  tasks:
+    - name: writing some content
+      block:
+        - lineinfile:
+            path: /home/ansible/happy.txt
+            line: "welcome to ansible"
+      rescue:
+        - file:
+            path: /home/ansible/happy.txt
+            state: touch
+        - lineinfile:
+            path: /home/ansible/happy.txt
+            line: "welcome to ansible"
+      always:
+        - apt:
+            name: unzip
+            state: present
+

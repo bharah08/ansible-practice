@@ -1,0 +1,36 @@
+---
+- name: lamp install
+  hosts: all
+  become: yes
+  vars:
+    lamp:
+      - mysql-server
+      - php
+      - libapache2-mod-php
+      - php-mysql
+      - php7.4-tidy
+  tasks:
+    - name: install apache2
+      apt: 
+        name: apache2
+        state: present
+    - name: start the servce
+      service:
+        name: apache2
+        state: started
+    - name: install php
+      apt:
+        name: "{{ item }}"
+        state: present
+      with_items:
+        - "{{ lamp }}"
+    - name: copy file to dest
+      copy:
+        src: info.php
+        dest: /var/www/html/
+      notify: need to restart
+  handlers:
+    - name: need to restart
+      service:
+        name: apache2
+        state: restarted
